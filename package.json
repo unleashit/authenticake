@@ -1,0 +1,63 @@
+{
+  "name": "authenticake",
+  "private": true,
+  "description": "Authentication and Authorization system with optional React components",
+  "scripts": {
+    "start": "lerna run preflight && run-p dev demos",
+    "dev": "lerna run start --stream --parallel --ignore @authenticake/demo*",
+    "demos": "lerna run start --stream --parallel --scope=@authenticake/demo*",
+    "build": "npm run build:common && lerna run --parallel --ignore {@authenticake/common,@authenticake/demo*} build",
+    "build:common": "lerna run --scope=@authenticake/common build",
+    "build:ci": "npm run build:common && lerna run --ignore {@authenticake/common,@authenticake/demo*} build",
+    "test": "lerna run test --parallel",
+    "test:watch": "lerna run test -- -- --watch",
+    "lint": "lerna run --parallel eslint",
+    "prettier": "lerna run --parallel prettier",
+    "prepublishOnly": "npm run build",
+    "release": "HUSKY_BYPASS=true lerna publish",
+    "clean": "lerna exec -- rimraf dist && lerna clean && rm -rf node_modules"
+  },
+  "license": "MIT",
+  "keywords": [
+    "authentication",
+    "authorization",
+    "jwt",
+    "sessions",
+    "oauth",
+    "react",
+    "typescript",
+    "keycloak"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unleashit/authenticake.git"
+  },
+  "homepage": "https://github.com/unleashit/authenticake",
+  "bugs": {
+    "url": "https://github.com/unleashit/authenticake/issues"
+  },
+  "devDependencies": {
+    "lerna": "^5.1.4",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "webpack-cli": "^4.10.0"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/common",
+      "packages/server",
+      "packages/connector",
+      "packages/client",
+      "demos/*"
+    ]
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=7.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "if -z \"$SKIP_TESTS\"; then prettier -l 'packages/**/*.{ts,tsx,js,jsx,json}' && eslint -c .eslintrc.js 'packages/**/*.{ts,tsx,js,jsx}' && npm test; fi"
+    }
+  }
+}

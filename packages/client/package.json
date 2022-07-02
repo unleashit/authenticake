@@ -1,0 +1,119 @@
+{
+  "name": "@authenticake/client",
+  "version": "0.1.0-alpha.1",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "description": "Authenticake frontend React components",
+  "scripts": {
+    "start": "npm run sass:build && run-p sass:watch babel:watch ts:watch",
+    "build": "rimraf ./dist && run-p build:* ts:cjs ts:esm sass:build",
+    "build:cjs": "BABEL_ENV=cjs NODE_ENV=production babel ./src --out-dir dist/cjs --extensions \".ts,.tsx\" --source-maps --config-file ./.babelrc",
+    "build:esm": "BABEL_ENV=esm NODE_ENV=production babel ./src --out-dir dist/esm --extensions \".ts,.tsx\" --source-maps --config-file ./.babelrc",
+    "babel:watch": "BABEL_ENV=esm NODE_ENV=production babel ./src --out-dir dist/esm --extensions \".ts,.tsx\" --source-maps --config-file ./.babelrc --watch",
+    "ts:cjs": "tsc --outDir dist/cjs --emitDeclarationOnly",
+    "ts:esm": "tsc --outDir dist/esm --module esnext --emitDeclarationOnly",
+    "ts:watch": "tsc --outDir dist/esm --module esnext --emitDeclarationOnly --watch",
+    "sass:build": "node-sass -r ./src/scss -o ./dist --source-map true",
+    "sass:watch": "node-sass -wr ./src/scss -o ./dist --source-map true",
+    "test": "NODE_ENV=test jest --config ./jest.config.js",
+    "test:watch": "NODE_ENV=test jest --config ./jest.config.js --watch",
+    "eslint": "eslint -c .eslintrc.js --fix 'src/**/*.{ts,tsx,js,jsx}'",
+    "prettier": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json}'"
+  },
+  "license": "MIT",
+  "keywords": [
+    "authentication",
+    "authorization",
+    "jwt",
+    "oauth",
+    "react",
+    "npm package",
+    "npm component",
+    "auth component",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unleashit/authenticake.git"
+  },
+  "homepage": "https://github.com/unleashit/authenticake",
+  "bugs": {
+    "url": "https://github.com/unleashit/authenticake/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^16 || ^17 || ^18"
+  },
+  "dependencies": {
+    "@unleashit/forgot-password": "*",
+    "@unleashit/login": "*",
+    "@unleashit/signup": "*",
+    "formik": "^2.2.9",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/enzyme": "^3.10.12",
+    "@types/jest": "^27.5.0",
+    "@types/lodash": "^4.14.182",
+    "@types/react": "^17.0.44",
+    "@types/yup": "^0.29.13",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "babel-loader": "^8.2.5",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^28.0.3",
+    "mini-css-extract-plugin": "^2.6.0",
+    "node-sass": "^7.0.1",
+    "nodemon": "^2.0.16",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.6.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.2.3",
+    "ts-jest": "^28.0.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src/server",
+      "demo/server"
+    ],
+    "exec": "npm run nodemon-cmd",
+    "ext": "ts,tsx"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "if [ -z \"$SKIP_TESTS\" ]; then prettier -l 'src/**/*.{ts,tsx,js,jsx,json}' && eslint -c .eslintrc.js 'src/**/*.{ts,tsx,js,jsx}' && npm run test; fi"
+    }
+  }
+}

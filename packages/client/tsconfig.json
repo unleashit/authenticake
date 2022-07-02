@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig",
+  "include": ["src"],
+  "compilerOptions": {
+    "lib": ["es5", "ESNext", "DOM"],
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "outDir": "dist/cjs"
+  },
+  "exclude": ["node_modules", "dist", "**/__tests__", "**/*.test.*"]
+}

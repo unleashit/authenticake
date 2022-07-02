@@ -1,0 +1,12 @@
+.idea
+.vscode
+.vsls.json
+node_modules
+dist
+build
+coverage
+.env*
+*.log
+http-client.private.env.json
+demos/server-express/pgData
+.turbo

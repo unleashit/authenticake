@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    // current support for Node 10 and above
+    // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+    "lib": [
+      "es2018"
+    ],
+    "module": "commonjs",
+    "target": "ES2018",
+    "moduleResolution": "node",
+    "esModuleInterop": true, // Import non-ES modules as default imports
+    "declaration": true,
+    "importHelpers": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": false,
+    "allowSyntheticDefaultImports": true,
+    "preserveWatchOutput": true, // keeps tsc from clearing console
+  },
+  "ts-node": {
+    "files": true
+  },
+}

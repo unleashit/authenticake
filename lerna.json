@@ -1,0 +1,16 @@
+{
+  "version": "independent",
+  "packages": [
+    "packages/common",
+    "packages/server",
+    "packages/connector",
+    "packages/client",
+    "demos/*"
+  ],
+  "npmClient": "npm",
+  "command": {
+    "bootstrap": {
+      "hoist": true
+    }
+  }
+}

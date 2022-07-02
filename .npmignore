@@ -1,0 +1,15 @@
+demo
+src
+dist/*.test.*
+.babelrc
+.eslintrc.js
+jest.config.js
+tsconfig.json
+node_modules
+coverage
+.idea
+.vscode
+*.log
+.gitignore
+.env*
+

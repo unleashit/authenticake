@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    container_name: pg_auth
+    image: postgres:14.2-alpine
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - './pgData:/var/lib/postgresql/data'
+      # - './pg-init.sh:/docker-entrypoint-initdb.d/pg-init.sh:ro'
+
+  cache:
+    container_name: redis_auth
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    command: ['--requirepass ${REDIS_PASSWORD}']

@@ -1,0 +1,87 @@
+# retrieves csrf and creates variable for use in headers
+GET {{api_root}}/authed
+Accept: */*
+# Authorization: Bearer {{accessToken}}
+# Cookie: {{atCookie}}
+# Cookie: {{ session }}
+
+> {%
+  const cookie = response.headers.valuesOf('Set-Cookie')[0];
+  const value = cookie.match(/^XSRF-TOKEN=([^;]+)/)[1];
+  client.log(value)
+  client.global.set("xsrfToken", value);
+%}
+
+###
+GET {{api_root}}
+Cookie: {{ session }}
+
+### login
+POST {{api_root}}/auth/login
+Content-Type: application/json
+XSRF-Token: {{ xsrfToken }}
+# Authorization: Bearer {{accessToken}}
+
+{
+  "email": "admin@example.com",
+  "password": "admin"
+}
+
+> {%
+  // client.global.set("accessToken", response.body.accessToken);
+  // client.global.set("session", response.headers.valuesOf('Set-Cookie')[1]);
+%}
+
+###
+POST {{api_root}}/auth/logout
+Content-Type: application/json
+XSRF-Token: {{ xsrfToken }}
+# Authorization: Bearer {{accessToken}}
+
+
+> {%
+  client.test("Request executed successfully", function() {
+      client.assert(response.status === 200, client.global.clearAll());
+  });
+  // client.global.clearAll();
+  // client.global.clear("session");
+  // client.global.clear("atCookie");
+  // client.global.clear("rtCookie");
+%}
+
+###
+POST {{api_root}}/auth/signup
+Content-Type: application/json
+XSRF-Token: {{ xsrfToken }}
+# Authorization: Bearer {{accessToken}}
+
+{
+  "email": "test6@user.com",
+  "password": "12345678",
+  "passwordConfirm": "12345678"
+}
+
+###
+POST {{api_root}}/refresh
+Content-Type: application/json
+# Cookie: {{ rtCookie }}
+# Cookie: {{ session }}
+
+> {%
+  client.global.set("atCookie", response.headers.valuesOf('Set-Cookie')[0]);
+  client.log(client.global.get("atCookie"));
+%}
+###
+#{
+#  "refreshToken": "{{refreshToken}}"
+#}
+
+###
+POST {{api_root}}/blacklist/1
+Accept: */*
+# Authorization: Bearer {{accessToken}}
+Cookie: {{atCookie}}
+Cookie: {{ session }}
+
+
+

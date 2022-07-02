@@ -1,0 +1,34 @@
+{
+  "presets": [
+    "@babel/preset-typescript"
+  ],
+  "ignore": ["**/__tests__", "**/*.test.{js,jsx,ts,tsx,map}"],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "env": {
+    "cjs": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": "commonjs"
+          }
+        ],
+        "@babel/preset-react"
+      ]
+    },
+    "esm": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false
+          }
+        ],
+        "@babel/preset-react"
+      ]
+    }
+  }
+}
